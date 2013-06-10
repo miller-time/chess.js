@@ -1,7 +1,7 @@
 var XLABELS = [ "A", "B", "C", "D", "E", "F", "G", "H" ];
 var YLABELS = [   8,   7,   6,   5,   4,   3,   2,   1 ];
 
-var Square = function(x, y) {
+function Square(x, y) {
     this.x = x;
     this.y = y;
     this._element = undefined;
@@ -21,7 +21,7 @@ var Square = function(x, y) {
     this.piece = undefined;
 }
 
-var Board = function() {
+function Board() {
     this.squares = [];
     for (var i = 0; i < 8; i++) {
 	for (var j = 0; j < 8; j++) {
