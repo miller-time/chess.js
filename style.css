@@ -8,7 +8,7 @@
 }
 
 .rounded {
-    border: 2px solid black;
+    border: 5px solid black;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     -o-border-radius: 10px;
