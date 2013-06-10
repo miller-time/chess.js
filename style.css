@@ -30,3 +30,13 @@
 .white {
     background-color: #FFF3F3;
 }
+
+.letter-coord {
+    bottom: -60px;
+    text-align: center;
+}
+
+.number-coord {
+    left: -60px;
+    text-align: center;
+}

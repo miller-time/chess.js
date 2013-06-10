@@ -1,3 +1,6 @@
+var XLABELS = [ "A", "B", "C", "D", "E", "F", "G", "H" ];
+var YLABELS = [   8,   7,   6,   5,   4,   3,   2,   1 ];
+
 var Square = function(x, y) {
     this.x = x;
     this.y = y;
@@ -15,6 +18,7 @@ var Square = function(x, y) {
 	return this._element;
     };
     this.element();
+    this.piece = undefined;
 }
 
 var Board = function() {
@@ -23,6 +27,24 @@ var Board = function() {
 	for (var j = 0; j < 8; j++) {
 	    this.squares.push(new Square(i, j));
 	}
+    }
+    for (var m = 0; m < 8; m++) {
+	var coord = $("<div />").css({
+	    top: 20+m*50 + "px"
+	});
+	coord.addClass("square");
+	coord.addClass("number-coord");
+	coord.html("<b>"+YLABELS[m]+"</b>");
+	$("#board").append(coord);
+    }
+    for (var n = 0; n < 8; n++) {
+	var coord = $("<div />").css({
+	    left: n*50 + "px"
+	});
+	coord.addClass("square");
+	coord.addClass("letter-coord");
+	coord.html("<b>"+XLABELS[n]+"</b>");
+	$("#board").append(coord);
     }
     this.getSquare = function(i, j) {
 	for (var k = 0; k < this.squares.length; k++) {
