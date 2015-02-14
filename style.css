@@ -23,12 +23,24 @@
     height: 50px;
 }
 
+.piece {
+    cursor: pointer;
+}
+
 .black {
     background-color: black;
 }
 
+.black.highlight {
+    background-color: #5D5DE7;
+}
+
 .white {
     background-color: #FFF3F3;
+}
+
+.white.highlight {
+    background-color: #7D7DE4;
 }
 
 .letter-coord {
