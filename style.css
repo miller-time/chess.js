@@ -76,3 +76,27 @@
 .white.king {
     background: url(img/white-king.png);
 }
+
+.black.pawn {
+    background: url(img/black-pawn.png);
+}
+
+.black.rook {
+    background: url(img/black-rook.png);
+}
+
+.black.knight {
+    background: url(img/black-knight.png);
+}
+
+.black.bishop {
+    background: url(img/black-bishop.png);
+}
+
+.black.queen {
+    background: url(img/black-queen.png);
+}
+
+.black.king {
+    background: url(img/black-king.png);
+}

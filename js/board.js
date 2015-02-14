@@ -28,6 +28,7 @@
 
         this.pieces = [];
         this.setupWhitePieces();
+        this.setupBlackPieces();
     };
 
     ChessJS.Board.prototype.setupElement = function() {
@@ -125,6 +126,20 @@
         this.addPiece(new ChessJS.Rook('white'),   'H', 1);
         for (var col = 0; col < XLABELS.length; ++col) {
             this.addPiece(new ChessJS.Pawn('white'), XLABELS[col], 2);
+        }
+    };
+
+    ChessJS.Board.prototype.setupBlackPieces = function() {
+        this.addPiece(new ChessJS.Rook('black'),   'A', 8);
+        this.addPiece(new ChessJS.Knight('black'), 'B', 8);
+        this.addPiece(new ChessJS.Bishop('black'), 'C', 8);
+        this.addPiece(new ChessJS.Queen('black'),  'D', 8);
+        this.addPiece(new ChessJS.King('black'),   'E', 8);
+        this.addPiece(new ChessJS.Bishop('black'), 'F', 8);
+        this.addPiece(new ChessJS.Knight('black'), 'G', 8);
+        this.addPiece(new ChessJS.Rook('black'),   'H', 8);
+        for (var col = 0; col < XLABELS.length; ++col) {
+            this.addPiece(new ChessJS.Pawn('black'), XLABELS[col], 7);
         }
     };
 
