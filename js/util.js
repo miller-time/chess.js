@@ -16,10 +16,22 @@
         }
     };
 
-    Array.prototype.pushIfDefined = function(elem) {
-        if (typeof elem !== 'undefined') {
-            this.push(elem);
+    /* Array.prototype.pushSquare
+     *
+     * `square`: Square
+     *
+     * Cannot be pushed if it's undefined or occupied by a piece of invalid color.
+     * Returns true if push was successful, false otherwise.
+     */
+    Array.prototype.pushSquare = function(square, invalidColor) {
+        if (square && !square.piece) {
+            this.push(square);
+            return true;
+        } else if (square.piece && invalidColor !== 'any' && square.piece.color !== invalidColor) {
+            this.push(square);
+            return true;
         }
+        return false;
     };
 
 })();
