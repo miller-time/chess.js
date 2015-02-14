@@ -126,25 +126,25 @@
         return squares;
     };
 
-     /***************************************
-     *              Bishop                  *
-     ***************************************/
+    /***************************************
+    *              Bishop                  *
+    ***************************************/
 
-     ChessJS.Bishop = function(color, square) {
+    ChessJS.Bishop = function(color, square) {
         Piece.call(this, color, square);
-     };
+    };
 
-     ChessJS.Bishop.prototype = Object.create(Piece.prototype);
-     ChessJS.Bishop.prototype.constructor = ChessJS.Bishop;
+    ChessJS.Bishop.prototype = Object.create(Piece.prototype);
+    ChessJS.Bishop.prototype.constructor = ChessJS.Bishop;
 
-     ChessJS.Bishop.prototype.setupElement = function() {
+    ChessJS.Bishop.prototype.setupElement = function() {
         this.element = $('<div />')
             .addClass(this.color)
             .addClass('bishop piece')
             .data('piece', this);
-     };
+    };
 
-     ChessJS.Bishop.prototype.possibleSquares = function() {
+    ChessJS.Bishop.prototype.possibleSquares = function() {
         var squares = [],
             x, y;
         for (x = this.square.x - 1, y = this.square.y - 1; x >= 0 && y >= 0; x--, y--) {
@@ -168,27 +168,27 @@
             }
         }
         return squares;
-     };
+    };
 
-     /***************************************
-     *              Queen                   *
-     ***************************************/
+    /***************************************
+    *              Queen                   *
+    ***************************************/
 
-     ChessJS.Queen = function(color, square) {
+    ChessJS.Queen = function(color, square) {
         Piece.call(this, color, square);
-     };
+    };
 
-     ChessJS.Queen.prototype = Object.create(Piece.prototype);
-     ChessJS.Queen.prototype.constructor = ChessJS.Queen;
+    ChessJS.Queen.prototype = Object.create(Piece.prototype);
+    ChessJS.Queen.prototype.constructor = ChessJS.Queen;
 
-     ChessJS.Queen.prototype.setupElement = function() {
+    ChessJS.Queen.prototype.setupElement = function() {
         this.element = $('<div />')
             .addClass(this.color)
             .addClass('queen piece')
             .data('piece', this);
-     };
+    };
 
-     ChessJS.Queen.prototype.possibleSquares = function() {
+    ChessJS.Queen.prototype.possibleSquares = function() {
         var squares = [],
             x, y;
         // Rook Moves
@@ -234,6 +234,6 @@
             }
         }
         return squares;
-     };
+    };
 
 })();
