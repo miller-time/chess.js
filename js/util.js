@@ -27,7 +27,7 @@
         if (square && !square.piece) {
             this.push(square);
             return true;
-        } else if (square.piece && invalidColor !== 'any' && square.piece.color !== invalidColor) {
+        } else if (square && square.piece && invalidColor !== 'any' && square.piece.color !== invalidColor) {
             this.push(square);
             return true;
         }
