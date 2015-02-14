@@ -18,8 +18,8 @@
         this.square = square;
         square.piece = this;
         this.element.css({
-            top: square.x * 50 + "px",
-            left: square.y * 50 + "px"
+            top: square.y * 50 + "px",
+            left: square.x * 50 + "px"
         });
     };
 
@@ -33,14 +33,15 @@
     ChessJS.Pawn.prototype.setupElement = function() {
         this.element = $('<div />')
             .addClass(this.color)
-            .addClass('pawn piece');
+            .addClass('pawn piece')
+            .data('piece', this);
     };
 
     ChessJS.Pawn.prototype.possibleSquares = function() {
-        var squares = [];
-        var yPlusOne = (this.color) == "white" ? -1 : 1;
-        squares.push(ChessJS.getRelativeSquare(this.square, 0, yPlusOne));
-        squares.push(ChessJS.getRelativeSquare(this.square, 0, yPlusOne*2));
+        var squares = [],
+            yPlusOne = (this.color) == "white" ? -1 : 1;
+        squares.pushIfDefined(ChessJS.getRelativeSquare(this.square, 0, yPlusOne));
+        squares.pushIfDefined(ChessJS.getRelativeSquare(this.square, 0, yPlusOne*2));
         return squares;
     };
 
@@ -54,26 +55,17 @@
     ChessJS.Rook.prototype.setupElement = function() {
         this.element = $('<div />')
             .addClass(this.color)
-            .addClass('rook piece');
+            .addClass('rook piece')
+            .data('piece', this);
     };
 
     ChessJS.Rook.prototype.possibleSquares = function() {
         var squares = [];
-        // positive X
-        for (var i = this.square.x; i < 8; i++) {
-            squares.push(ChessJS.getRelativeSquare(this.square, i, this.square.y));
+        for (var x = 0; x < 8; x++) {
+            squares.pushIfDefined(ChessJS.getRelativeSquare(this.square, x - this.square.x, 0));
         }
-        // negative X
-        for (var i = this.square.x; i >= 0; i--) {
-            squares.push(ChessJS.getRelativeSquare(this.square, i, this.square.y));
-        }
-        // positive Y
-        for (var i = this.square.y; i < 8; i++) {
-            squares.push(ChessJS.getRelativeSquare(this.square, this.square.x, i));
-        }
-        // negative Y
-        for (var i = this.square.y; i >= 0; i--) {
-            squares.push(ChessJS.getRelativeSquare(this.square, this.square.x, i));
+        for (var y = 0; y < 8; y++) {
+            squares.pushIfDefined(ChessJS.getRelativeSquare(this.square, 0, y - this.square.y));
         }
         return squares;
     };

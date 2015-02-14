@@ -13,8 +13,8 @@
     Square.prototype.setupElement = function() {
         this.element = $("<div />")
             .css({
-                top: this.x * 50 + "px",
-                left: this.y * 50 + "px"
+                top: this.y * 50 + "px",
+                left: this.x * 50 + "px"
             })
             .addClass("square")
             .addClass(ChessJS.squareColor(this.x, this.y));
@@ -53,7 +53,7 @@
             });
             coord.addClass("square");
             coord.addClass("number-coord");
-            coord.html("<b>"+YLABELS[m]+"</b>");
+            coord.html("<b>"+this.getYCoord(m)+"</b>");
             this.element.append(coord);
         }
         for (var n = 0; n < 8; n++) {
@@ -62,41 +62,63 @@
             });
             coord.addClass("square");
             coord.addClass("letter-coord");
-            coord.html("<b>"+XLABELS[n]+"</b>");
+            coord.html("<b>"+this.getXCoord(n)+"</b>");
             this.element.append(coord);
         }
     };
 
-    ChessJS.Board.prototype.getSquare = function(i, j) {
+    ChessJS.Board.prototype.getX = function(xCoord) {
+        return XLABELS.indexOf(xCoord);
+    };
+
+    ChessJS.Board.prototype.getXCoord = function(x) {
+        return XLABELS[x];
+    };
+
+    ChessJS.Board.prototype.getY = function(yCoord) {
+        return YLABELS.indexOf(yCoord);
+    };
+
+    ChessJS.Board.prototype.getYCoord = function(y) {
+        return YLABELS[y];
+    };
+
+    ChessJS.Board.prototype.getSquarebyXY = function(x, y) {
+        return this.getSquare(this.getXCoord(x), this.getYCoord(y));
+    };
+
+    ChessJS.Board.prototype.getSquare = function(xCoord, yCoord) {
         for (var k = 0; k < this.squares.length; k++) {
             var x = this.squares[k].x;
             var y = this.squares[k].y;
-            if (x == i && y == j) {
+            if (x === this.getX(xCoord) && y === this.getY(yCoord)) {
                 return this.squares[k];
             }
         }
     };
 
     ChessJS.Board.prototype.addStyles = function() {
-        var topLeft = this.getSquare(0, 0).element;
-        topLeft.css({ "border-top-left-radius": "10px" });
-        var bottomRight = this.getSquare(7, 7).element;
-        bottomRight.css({ "border-bottom-right-radius": "10px" });
+        var topLeft = this.getSquare('A', 8).element,
+            topRight = this.getSquare('H', 8).element,
+            bottomLeft = this.getSquare('A', 1).element,
+            bottomRight = this.getSquare('H', 1).element;
+        topLeft.css("border-top-left-radius", "5px");
+        topRight.css("border-top-right-radius", "5px");
+        bottomLeft.css("border-bottom-left-radius", "5px");
+        bottomRight.css("border-bottom-right-radius", "5px");
     };
 
     ChessJS.Board.prototype.addPiece = function(piece, xCoord, yCoord) {
         this.pieces.push(piece);
         this.element.append(piece.element);
-        var i = YLABELS.indexOf(yCoord),
-            j = XLABELS.indexOf(xCoord);
-        piece.moveTo(this.getSquare(i, j));
+        piece.moveTo(this.getSquare(xCoord, yCoord));
     };
 
     ChessJS.Board.prototype.setupWhitePieces = function() {
-        this.addPiece(new ChessJS.Rook('white'), 'A', 8);
-        this.addPiece(new ChessJS.Rook('white'), 'H', 8);
+        this.addPiece(new ChessJS.Rook('white'), 'A', 1);
+        this.addPiece(new ChessJS.Rook('white'), 'H', 1);
         for (var col = 0; col < XLABELS.length; ++col) {
-            this.addPiece(new ChessJS.Pawn('white'), XLABELS[col], 7);
+            this.addPiece(new ChessJS.Pawn('white'), XLABELS[col], 2);
         }
     };
 
