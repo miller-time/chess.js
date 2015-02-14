@@ -109,4 +109,40 @@
         return squares;
     };
 
+     /***************************************
+     *              Bishop                  *
+     ***************************************/
+
+     ChessJS.Bishop = function(color, square) {
+        Piece.call(this, color, square);
+     };
+
+     ChessJS.Bishop.prototype = Object.create(Piece.prototype);
+     ChessJS.Bishop.prototype.constructor = ChessJS.Bishop;
+
+     ChessJS.Bishop.prototype.setupElement = function() {
+        this.element = $('<div />')
+            .addClass(this.color)
+            .addClass('bishop piece')
+            .data('piece', this);
+     };
+
+     ChessJS.Bishop.prototype.possibleSquares = function() {
+        var squares = [],
+            x, y;
+        for (x = this.square.x, y = this.square.y; x >= 0 && y >= 0; x--, y--) {
+            squares.pushIfDefined(ChessJS.getRelativeSquare(this.square, x - this.square.x, y - this.square.y));
+        }
+        for (x = this.square.x, y = this.square.y; x < 8 && y >= 0; x++, y--) {
+            squares.pushIfDefined(ChessJS.getRelativeSquare(this.square, x - this.square.x, y - this.square.y));
+        }
+        for (x = this.square.x, y = this.square.y; x >= 0 && y < 8; x--, y++) {
+            squares.pushIfDefined(ChessJS.getRelativeSquare(this.square, x - this.square.x, y - this.square.y));
+        }
+        for (x = this.square.x, y = this.square.y; x < 8 && y < 8; x++, y++) {
+            squares.pushIfDefined(ChessJS.getRelativeSquare(this.square, x - this.square.x, y - this.square.y));
+        }
+        return squares;
+     };
+
 })();
