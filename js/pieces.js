@@ -23,6 +23,10 @@
         });
     };
 
+    /***************************************
+     *              Pawn                   *
+     ***************************************/
+
     ChessJS.Pawn = function(color, square) {
         Piece.call(this, color, square);
     };
@@ -44,6 +48,10 @@
         squares.pushIfDefined(ChessJS.getRelativeSquare(this.square, 0, yPlusOne*2));
         return squares;
     };
+
+    /***************************************
+     *              Rook                   *
+     ***************************************/
 
     ChessJS.Rook = function(color, square) {
         Piece.call(this, color, square);
@@ -67,6 +75,37 @@
         for (var y = 0; y < 8; y++) {
             squares.pushIfDefined(ChessJS.getRelativeSquare(this.square, 0, y - this.square.y));
         }
+        return squares;
+    };
+
+    /***************************************
+     *              Knight                 *
+     ***************************************/
+
+    ChessJS.Knight = function(color, square) {
+        Piece.call(this, color, square);
+    };
+
+    ChessJS.Knight.prototype = Object.create(Piece.prototype);
+    ChessJS.Knight.prototype.constructor = ChessJS.Knight;
+
+    ChessJS.Knight.prototype.setupElement = function() {
+        this.element = $('<div />')
+            .addClass(this.color)
+            .addClass('knight piece')
+            .data('piece', this);
+    };
+
+    ChessJS.Knight.prototype.possibleSquares = function() {
+        var squares = [];
+        squares.pushIfDefined(ChessJS.getRelativeSquare(this.square, -1, -2));
+        squares.pushIfDefined(ChessJS.getRelativeSquare(this.square, -2, -1));
+        squares.pushIfDefined(ChessJS.getRelativeSquare(this.square, 1, -2));
+        squares.pushIfDefined(ChessJS.getRelativeSquare(this.square, 2, -1));
+        squares.pushIfDefined(ChessJS.getRelativeSquare(this.square, -1, 2));
+        squares.pushIfDefined(ChessJS.getRelativeSquare(this.square, -2, 1));
+        squares.pushIfDefined(ChessJS.getRelativeSquare(this.square, 1, 2));
+        squares.pushIfDefined(ChessJS.getRelativeSquare(this.square, 2, 1));
         return squares;
     };
 

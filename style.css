@@ -48,3 +48,7 @@
 .white.rook {
     background: url(img/white-rook.png);
 }
+
+.white.knight {
+    background: url(img/white-knight.png);
+}
