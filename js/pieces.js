@@ -236,4 +236,35 @@
         return squares;
     };
 
+    /***************************************
+    *              King                    *
+    ***************************************/
+
+    ChessJS.King = function(color, square) {
+        Piece.call(this, color, square);
+    };
+
+    ChessJS.King.prototype = Object.create(Piece.prototype);
+    ChessJS.King.prototype.constructor = ChessJS.King;
+
+    ChessJS.King.prototype.setupElement = function() {
+        this.element = $('<div />')
+            .addClass(this.color)
+            .addClass('king piece')
+            .data('piece', this);
+    };
+
+    ChessJS.King.prototype.possibleSquares = function() {
+        var squares = [];
+        squares.pushSquare(ChessJS.getRelativeSquare(this.square, -1, -1), this.color);
+        squares.pushSquare(ChessJS.getRelativeSquare(this.square, -1, 0), this.color);
+        squares.pushSquare(ChessJS.getRelativeSquare(this.square, -1, 1), this.color);
+        squares.pushSquare(ChessJS.getRelativeSquare(this.square, 0, -1), this.color);
+        squares.pushSquare(ChessJS.getRelativeSquare(this.square, 0, 1), this.color);
+        squares.pushSquare(ChessJS.getRelativeSquare(this.square, 1, -1), this.color);
+        squares.pushSquare(ChessJS.getRelativeSquare(this.square, 1, 0), this.color);
+        squares.pushSquare(ChessJS.getRelativeSquare(this.square, 1, 1), this.color);
+        return squares;
+    };
+
 })();
