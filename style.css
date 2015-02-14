@@ -68,3 +68,7 @@
 .white.bishop {
     background: url(img/white-bishop.png);
 }
+
+.white.queen {
+    background: url(img/white-queen.png);
+}
