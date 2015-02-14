@@ -1,8 +1,7 @@
 (function() {
 
-    var Piece = function(color, square) {
+    var Piece = function(color) {
         this.color = color;
-        this.square = square;
         this.setupElement();
     };
 
@@ -27,8 +26,8 @@
      *              Pawn                   *
      ***************************************/
 
-    ChessJS.Pawn = function(color, square) {
-        Piece.call(this, color, square);
+    ChessJS.Pawn = function(color) {
+        Piece.call(this, color);
     };
 
     ChessJS.Pawn.prototype = Object.create(Piece.prototype);
@@ -55,8 +54,8 @@
      *              Rook                   *
      ***************************************/
 
-    ChessJS.Rook = function(color, square) {
-        Piece.call(this, color, square);
+    ChessJS.Rook = function(color) {
+        Piece.call(this, color);
     };
 
     ChessJS.Rook.prototype = Object.create(Piece.prototype);
@@ -99,8 +98,8 @@
      *              Knight                 *
      ***************************************/
 
-    ChessJS.Knight = function(color, square) {
-        Piece.call(this, color, square);
+    ChessJS.Knight = function(color) {
+        Piece.call(this, color);
     };
 
     ChessJS.Knight.prototype = Object.create(Piece.prototype);
@@ -130,8 +129,8 @@
     *              Bishop                  *
     ***************************************/
 
-    ChessJS.Bishop = function(color, square) {
-        Piece.call(this, color, square);
+    ChessJS.Bishop = function(color) {
+        Piece.call(this, color);
     };
 
     ChessJS.Bishop.prototype = Object.create(Piece.prototype);
@@ -174,8 +173,8 @@
     *              Queen                   *
     ***************************************/
 
-    ChessJS.Queen = function(color, square) {
-        Piece.call(this, color, square);
+    ChessJS.Queen = function(color) {
+        Piece.call(this, color);
     };
 
     ChessJS.Queen.prototype = Object.create(Piece.prototype);
@@ -240,8 +239,8 @@
     *              King                    *
     ***************************************/
 
-    ChessJS.King = function(color, square) {
-        Piece.call(this, color, square);
+    ChessJS.King = function(color) {
+        Piece.call(this, color);
     };
 
     ChessJS.King.prototype = Object.create(Piece.prototype);

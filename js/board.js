@@ -115,14 +115,14 @@
     };
 
     ChessJS.Board.prototype.setupWhitePieces = function() {
-        this.addPiece(new ChessJS.Rook('white'), 'A', 1);
+        this.addPiece(new ChessJS.Rook('white'),   'A', 1);
         this.addPiece(new ChessJS.Knight('white'), 'B', 1);
         this.addPiece(new ChessJS.Bishop('white'), 'C', 1);
-        this.addPiece(new ChessJS.Queen('white'), 'D', 1);
-        this.addPiece(new ChessJS.King('white'), 'E', 1);
+        this.addPiece(new ChessJS.Queen('white'),  'D', 1);
+        this.addPiece(new ChessJS.King('white'),   'E', 1);
         this.addPiece(new ChessJS.Bishop('white'), 'F', 1);
         this.addPiece(new ChessJS.Knight('white'), 'G', 1);
-        this.addPiece(new ChessJS.Rook('white'), 'H', 1);
+        this.addPiece(new ChessJS.Rook('white'),   'H', 1);
         for (var col = 0; col < XLABELS.length; ++col) {
             this.addPiece(new ChessJS.Pawn('white'), XLABELS[col], 2);
         }
