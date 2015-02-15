@@ -2,8 +2,19 @@
 
     window.ChessJS = window.ChessJS || {};
 
-    ChessJS.getRelativeSquare = function(square, deltaX, deltaY) {
-        if (this.game && this.game.board) {
+    /* ChessJS.getRelativeSquare
+     *
+     * `square`: Square or BoardState square info
+     * `deltaX`: offset for square's x value
+     * `deltaY`: offset for square's y value
+     * `boardState`: when specified, use this board instead of the game board
+     *
+     * Returns the square at the [+deltaX, +deltaY] offset.
+     */
+    ChessJS.getRelativeSquare = function(square, deltaX, deltaY, boardState) {
+        if (boardState) {
+            return boardState.getSquare(square.x + deltaX, square.y + deltaY);
+        } else if (this.game && this.game.board) {
             return this.game.board.getSquarebyXY(square.x + deltaX, square.y + deltaY);
         }
     };

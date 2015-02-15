@@ -1,7 +1,8 @@
 (function() {
 
-    var Piece = function(color) {
+    var Piece = function(color, name) {
         this.color = color;
+        this.name = name;
         this.status = 'new';
         this.setupElement();
     };
@@ -48,7 +49,7 @@
      ***************************************/
 
     ChessJS.Pawn = function(color) {
-        Piece.call(this, color);
+        Piece.call(this, color, 'pawn');
     };
 
     ChessJS.Pawn.prototype = Object.create(Piece.prototype);
@@ -66,15 +67,15 @@
             });
     };
 
-    ChessJS.Pawn.prototype.possibleSquares = function() {
+    ChessJS.Pawn.prototype.possibleSquares = function(boardState) {
         var squares = [],
             yPlusOne = (this.color) == "white" ? -1 : 1;
-        var canMoveOne = squares.pushSquare(ChessJS.getRelativeSquare(this.square, 0, yPlusOne), 'any');
+        var canMoveOne = squares.pushSquare(ChessJS.getRelativeSquare(this.square, 0, yPlusOne, boardState), 'any');
         if (canMoveOne && this.status === 'new') {
-            squares.pushSquare(ChessJS.getRelativeSquare(this.square, 0, yPlusOne*2), 'any');
+            squares.pushSquare(ChessJS.getRelativeSquare(this.square, 0, yPlusOne*2, boardState), 'any');
         }
-        var leftAttackSquare = ChessJS.getRelativeSquare(this.square, -1, yPlusOne),
-            rightAttackSquare = ChessJS.getRelativeSquare(this.square, 1, yPlusOne);
+        var leftAttackSquare = ChessJS.getRelativeSquare(this.square, -1, yPlusOne, boardState),
+            rightAttackSquare = ChessJS.getRelativeSquare(this.square, 1, yPlusOne, boardState);
         if (leftAttackSquare && leftAttackSquare.piece && leftAttackSquare.piece.color !== this.color) {
             squares.push(leftAttackSquare);
         }
@@ -89,7 +90,7 @@
      ***************************************/
 
     ChessJS.Rook = function(color) {
-        Piece.call(this, color);
+        Piece.call(this, color, 'rook');
     };
 
     ChessJS.Rook.prototype = Object.create(Piece.prototype);
@@ -107,26 +108,26 @@
             });
     };
 
-    ChessJS.Rook.prototype.possibleSquares = function() {
+    ChessJS.Rook.prototype.possibleSquares = function(boardState) {
         var squares = [],
             x, y;
         for (x = this.square.x + 1; x < 8; x++) {
-            if (!squares.pushSquare(ChessJS.getRelativeSquare(this.square, x - this.square.x, 0), this.color)) {
+            if (!squares.pushSquare(ChessJS.getRelativeSquare(this.square, x - this.square.x, 0, boardState), this.color)) {
                 break;
             }
         }
         for (x = this.square.x - 1; x >= 0; x--) {
-            if (!squares.pushSquare(ChessJS.getRelativeSquare(this.square, x - this.square.x, 0), this.color)) {
+            if (!squares.pushSquare(ChessJS.getRelativeSquare(this.square, x - this.square.x, 0, boardState), this.color)) {
                 break;
             }
         }
         for (y = this.square.y + 1; y < 8; y++) {
-            if (!squares.pushSquare(ChessJS.getRelativeSquare(this.square, 0, y - this.square.y), this.color)) {
+            if (!squares.pushSquare(ChessJS.getRelativeSquare(this.square, 0, y - this.square.y, boardState), this.color)) {
                 break;
             }
         }
         for (y = this.square.y - 1; y >= 0; y--) {
-            if (!squares.pushSquare(ChessJS.getRelativeSquare(this.square, 0, y - this.square.y), this.color)) {
+            if (!squares.pushSquare(ChessJS.getRelativeSquare(this.square, 0, y - this.square.y, boardState), this.color)) {
                 break;
             }
         }
@@ -138,7 +139,7 @@
      ***************************************/
 
     ChessJS.Knight = function(color) {
-        Piece.call(this, color);
+        Piece.call(this, color, 'knight');
     };
 
     ChessJS.Knight.prototype = Object.create(Piece.prototype);
@@ -156,16 +157,16 @@
             });
     };
 
-    ChessJS.Knight.prototype.possibleSquares = function() {
+    ChessJS.Knight.prototype.possibleSquares = function(boardState) {
         var squares = [];
-        squares.pushSquare(ChessJS.getRelativeSquare(this.square, -1, -2), this.color);
-        squares.pushSquare(ChessJS.getRelativeSquare(this.square, -2, -1), this.color);
-        squares.pushSquare(ChessJS.getRelativeSquare(this.square, 1, -2), this.color);
-        squares.pushSquare(ChessJS.getRelativeSquare(this.square, 2, -1), this.color);
-        squares.pushSquare(ChessJS.getRelativeSquare(this.square, -1, 2), this.color);
-        squares.pushSquare(ChessJS.getRelativeSquare(this.square, -2, 1), this.color);
-        squares.pushSquare(ChessJS.getRelativeSquare(this.square, 1, 2), this.color);
-        squares.pushSquare(ChessJS.getRelativeSquare(this.square, 2, 1), this.color);
+        squares.pushSquare(ChessJS.getRelativeSquare(this.square, -1, -2, boardState), this.color);
+        squares.pushSquare(ChessJS.getRelativeSquare(this.square, -2, -1, boardState), this.color);
+        squares.pushSquare(ChessJS.getRelativeSquare(this.square, 1, -2, boardState), this.color);
+        squares.pushSquare(ChessJS.getRelativeSquare(this.square, 2, -1, boardState), this.color);
+        squares.pushSquare(ChessJS.getRelativeSquare(this.square, -1, 2, boardState), this.color);
+        squares.pushSquare(ChessJS.getRelativeSquare(this.square, -2, 1, boardState), this.color);
+        squares.pushSquare(ChessJS.getRelativeSquare(this.square, 1, 2, boardState), this.color);
+        squares.pushSquare(ChessJS.getRelativeSquare(this.square, 2, 1, boardState), this.color);
         return squares;
     };
 
@@ -174,7 +175,7 @@
     ***************************************/
 
     ChessJS.Bishop = function(color) {
-        Piece.call(this, color);
+        Piece.call(this, color, 'bishop');
     };
 
     ChessJS.Bishop.prototype = Object.create(Piece.prototype);
@@ -192,26 +193,46 @@
             });
     };
 
-    ChessJS.Bishop.prototype.possibleSquares = function() {
+    ChessJS.Bishop.prototype.possibleSquares = function(boardState) {
         var squares = [],
             x, y;
         for (x = this.square.x - 1, y = this.square.y - 1; x >= 0 && y >= 0; x--, y--) {
-            if (!squares.pushSquare(ChessJS.getRelativeSquare(this.square, x - this.square.x, y - this.square.y), this.color)) {
+            if (!squares.pushSquare(ChessJS.getRelativeSquare(
+                this.square,
+                x - this.square.x,
+                y - this.square.y,
+                boardState
+            ), this.color)) {
                 break;
             }
         }
         for (x = this.square.x + 1, y = this.square.y - 1; x < 8 && y >= 0; x++, y--) {
-            if (!squares.pushSquare(ChessJS.getRelativeSquare(this.square, x - this.square.x, y - this.square.y), this.color)) {
+            if (!squares.pushSquare(ChessJS.getRelativeSquare(
+                this.square,
+                x - this.square.x,
+                y - this.square.y,
+                boardState
+            ), this.color)) {
                 break;
             }
         }
         for (x = this.square.x - 1, y = this.square.y + 1; x >= 0 && y < 8; x--, y++) {
-            if (!squares.pushSquare(ChessJS.getRelativeSquare(this.square, x - this.square.x, y - this.square.y), this.color)) {
+            if (!squares.pushSquare(ChessJS.getRelativeSquare(
+                this.square,
+                x - this.square.x,
+                y - this.square.y,
+                boardState
+            ), this.color)) {
                 break;
             }
         }
         for (x = this.square.x + 1, y = this.square.y + 1; x < 8 && y < 8; x++, y++) {
-            if (!squares.pushSquare(ChessJS.getRelativeSquare(this.square, x - this.square.x, y - this.square.y), this.color)) {
+            if (!squares.pushSquare(ChessJS.getRelativeSquare(
+                this.square,
+                x - this.square.x,
+                y - this.square.y,
+                boardState
+            ), this.color)) {
                 break;
             }
         }
@@ -223,7 +244,7 @@
     ***************************************/
 
     ChessJS.Queen = function(color) {
-        Piece.call(this, color);
+        Piece.call(this, color, 'queen');
     };
 
     ChessJS.Queen.prototype = Object.create(Piece.prototype);
@@ -241,48 +262,68 @@
             });
     };
 
-    ChessJS.Queen.prototype.possibleSquares = function() {
+    ChessJS.Queen.prototype.possibleSquares = function(boardState) {
         var squares = [],
             x, y;
         // Rook Moves
         for (x = this.square.x + 1; x < 8; x++) {
-            if (!squares.pushSquare(ChessJS.getRelativeSquare(this.square, x - this.square.x, 0), this.color)) {
+            if (!squares.pushSquare(ChessJS.getRelativeSquare(this.square, x - this.square.x, 0, boardState), this.color)) {
                 break;
             }
         }
         for (x = this.square.x - 1; x >= 0; x--) {
-            if (!squares.pushSquare(ChessJS.getRelativeSquare(this.square, x - this.square.x, 0), this.color)) {
+            if (!squares.pushSquare(ChessJS.getRelativeSquare(this.square, x - this.square.x, 0, boardState), this.color)) {
                 break;
             }
         }
         for (y = this.square.y + 1; y < 8; y++) {
-            if (!squares.pushSquare(ChessJS.getRelativeSquare(this.square, 0, y - this.square.y), this.color)) {
+            if (!squares.pushSquare(ChessJS.getRelativeSquare(this.square, 0, y - this.square.y, boardState), this.color)) {
                 break;
             }
         }
         for (y = this.square.y - 1; y >= 0; y--) {
-            if (!squares.pushSquare(ChessJS.getRelativeSquare(this.square, 0, y - this.square.y), this.color)) {
+            if (!squares.pushSquare(ChessJS.getRelativeSquare(this.square, 0, y - this.square.y, boardState), this.color)) {
                 break;
             }
         }
         // Bishop Moves
         for (x = this.square.x - 1, y = this.square.y - 1; x >= 0 && y >= 0; x--, y--) {
-            if (!squares.pushSquare(ChessJS.getRelativeSquare(this.square, x - this.square.x, y - this.square.y), this.color)) {
+            if (!squares.pushSquare(ChessJS.getRelativeSquare(
+                this.square,
+                x - this.square.x,
+                y - this.square.y,
+                boardState
+            ), this.color)) {
                 break;
             }
         }
         for (x = this.square.x + 1, y = this.square.y - 1; x < 8 && y >= 0; x++, y--) {
-            if (!squares.pushSquare(ChessJS.getRelativeSquare(this.square, x - this.square.x, y - this.square.y), this.color)) {
+            if (!squares.pushSquare(ChessJS.getRelativeSquare(
+                this.square,
+                x - this.square.x,
+                y - this.square.y,
+                boardState
+            ), this.color)) {
                 break;
             }
         }
         for (x = this.square.x - 1, y = this.square.y + 1; x >= 0 && y < 8; x--, y++) {
-            if (!squares.pushSquare(ChessJS.getRelativeSquare(this.square, x - this.square.x, y - this.square.y), this.color)) {
+            if (!squares.pushSquare(ChessJS.getRelativeSquare(
+                this.square,
+                x - this.square.x,
+                y - this.square.y,
+                boardState
+            ), this.color)) {
                 break;
             }
         }
         for (x = this.square.x + 1, y = this.square.y + 1; x < 8 && y < 8; x++, y++) {
-            if (!squares.pushSquare(ChessJS.getRelativeSquare(this.square, x - this.square.x, y - this.square.y), this.color)) {
+            if (!squares.pushSquare(ChessJS.getRelativeSquare(
+                this.square,
+                x - this.square.x,
+                y - this.square.y,
+                boardState
+            ), this.color)) {
                 break;
             }
         }
@@ -294,7 +335,7 @@
     ***************************************/
 
     ChessJS.King = function(color) {
-        Piece.call(this, color);
+        Piece.call(this, color, 'king');
     };
 
     ChessJS.King.prototype = Object.create(Piece.prototype);
@@ -312,16 +353,16 @@
             });
     };
 
-    ChessJS.King.prototype.possibleSquares = function() {
+    ChessJS.King.prototype.possibleSquares = function(boardState) {
         var squares = [];
-        squares.pushSquare(ChessJS.getRelativeSquare(this.square, -1, -1), this.color);
-        squares.pushSquare(ChessJS.getRelativeSquare(this.square, -1, 0), this.color);
-        squares.pushSquare(ChessJS.getRelativeSquare(this.square, -1, 1), this.color);
-        squares.pushSquare(ChessJS.getRelativeSquare(this.square, 0, -1), this.color);
-        squares.pushSquare(ChessJS.getRelativeSquare(this.square, 0, 1), this.color);
-        squares.pushSquare(ChessJS.getRelativeSquare(this.square, 1, -1), this.color);
-        squares.pushSquare(ChessJS.getRelativeSquare(this.square, 1, 0), this.color);
-        squares.pushSquare(ChessJS.getRelativeSquare(this.square, 1, 1), this.color);
+        squares.pushSquare(ChessJS.getRelativeSquare(this.square, -1, -1, boardState), this.color);
+        squares.pushSquare(ChessJS.getRelativeSquare(this.square, -1, 0, boardState), this.color);
+        squares.pushSquare(ChessJS.getRelativeSquare(this.square, -1, 1, boardState), this.color);
+        squares.pushSquare(ChessJS.getRelativeSquare(this.square, 0, -1, boardState), this.color);
+        squares.pushSquare(ChessJS.getRelativeSquare(this.square, 0, 1, boardState), this.color);
+        squares.pushSquare(ChessJS.getRelativeSquare(this.square, 1, -1, boardState), this.color);
+        squares.pushSquare(ChessJS.getRelativeSquare(this.square, 1, 0, boardState), this.color);
+        squares.pushSquare(ChessJS.getRelativeSquare(this.square, 1, 1, boardState), this.color);
         return squares;
     };
 

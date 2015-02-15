@@ -171,4 +171,54 @@
         }
     };
 
+    ChessJS.BoardState = function(board) {
+        this.squares = [];
+        $.each(board.squares, function(idx, square) {
+            var squareInfo = {
+                x: square.x,
+                y: square.y
+            };
+            if (square.piece) {
+                squareInfo.piece = {
+                    'color': square.piece.color,
+                    'name': square.piece.name
+                }
+            }
+            squares.push(squareInfo);
+        });
+    };
+
+    ChessJS.BoardState.prototype.getSquare = function(x, y) {
+        for (var i = 0; i < this.squares.length; i++) {
+            if (squares[i].x === x && squares[i].y === y) {
+                return squares[i];
+            }
+        }
+    };
+
+    ChessJS.BoardState.prototype.movePiece = function(x, y, newX, newY) {
+        var oldSquare = this.getSquare(x, y),
+            newSquare = this.getSquare(newX, newY);
+        if (!oldSquare) {
+            throw 'Cannot move piece from (' + x + ',' + y + '). Square does not exist!';
+        }
+        if (!newSquare) {
+            throw 'Cannot move piece to (' + newX + ',' + newY + '). Square does not exist!';
+        }
+        if (oldSquare.piece) {
+            newSquare.piece = {
+                'color': oldSquare.piece.color,
+                'name': oldSquare.piece.name,
+                'status': oldSquare.piece.status
+            };
+            oldSquare.piece = null;
+        } else {
+            throw 'Cannot move piece from (' + x + ',' + y + '). It is not there!';
+        }
+    };
+
+    ChessJS.Board.prototype.getState = function() {
+        return new ChessJS.BoardState(this);
+    };
+
 })();
