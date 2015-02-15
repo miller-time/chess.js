@@ -9,3 +9,11 @@ a meadow, and my code ended up disgusting. The game, nevertheless, was buggy and
 
 For a long time I've wanted to try again. I'm going to use JQuery and regular objects to do it from
 scratch, just for fun.
+
+To Do
+=====
+
+ * Check / Move restriction while in check
+ * Checkmate / Restarting the game
+ * Castling
+ * Queening
