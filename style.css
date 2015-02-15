@@ -73,6 +73,18 @@ body {
     float: left;
 }
 
+#footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    padding: 30px;
+    font-size: 11px;
+}
+
+#footer img {
+    vertical-align: bottom;
+}
+
 .rounded {
     border: 5px solid black;
     -webkit-border-radius: 10px;
