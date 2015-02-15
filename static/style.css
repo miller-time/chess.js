@@ -110,6 +110,14 @@ body {
     height: 50px;
 }
 
+.square.alert {
+    background-color: yellow;
+}
+
+.square.warning {
+    background-color: red;
+}
+
 .piece {
     cursor: pointer;
 }

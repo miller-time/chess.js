@@ -24,7 +24,14 @@
                 accept: function(draggedElement) {
                     var piece = draggedElement.data('piece');
                     if (piece) {
-                        var validSquares = piece.possibleSquares();
+                        var validSquares;
+                        if (ChessJS.game && ChessJS.game[piece.color + 'InCheck']) {
+                            // check if this piece can break check
+                            validSquares = [];
+                        } else {
+                            // normal movement rules
+                            validSquares = piece.possibleSquares();
+                        }
                         if (validSquares.indexOf(self) !== -1) {
                             return true;
                         }

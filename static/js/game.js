@@ -74,8 +74,43 @@
         });
     };
 
+    ChessJS.ChessGame.prototype.checkForCheck = function(color) {
+        var king = $('.' + color + '.king').data('piece'),
+            kingInCheck = false,
+            threats = [];
+        if (king) {
+            $.each(ChessJS.game.board.pieces, function(idx, piece) {
+                if (piece.color === ChessJS.otherColor(color) && piece.canMoveTo(king.square)) {
+                    threats.push(piece);
+                    kingInCheck = true;
+                }
+            });
+            if (kingInCheck) {
+                return {
+                    'inCheck': color,
+                    'king': king,
+                    'threats': threats
+                };
+            }
+        } else {
+            throw 'King not found for color ' + color + '!';
+        }
+    };
+
+    ChessJS.ChessGame.prototype.highlightCheck = function(checkData) {
+        $.each(checkData.threats, function(idx, piece) {
+            piece.square.element.addClass('alert');
+        });
+        checkData.king.square.element.addClass('warning');
+    };
+
     $(document).on('pieceMoved', function(event, piece) {
         if (ChessJS.game) {
+            checkData = ChessJS.game.checkForCheck(ChessJS.otherColor(piece.color));
+            if (checkData && checkData.inCheck) {
+                ChessJS.game[checkData.inCheck + 'InCheck'] = true;
+                ChessJS.game.highlightCheck(checkData);
+            }
             ChessJS.game.turnTaken(piece.color);
         }
     });

@@ -14,6 +14,11 @@
         return [];
     };
 
+    Piece.prototype.canMoveTo = function(square) {
+        var squares = this.possibleSquares();
+        return squares.indexOf(square) !== -1;
+    };
+
     Piece.prototype.moveTo = function(square) {
         var oldSquare = this.square;
         this.square = square;

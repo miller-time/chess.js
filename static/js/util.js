@@ -8,6 +8,10 @@
         }
     };
 
+    ChessJS.otherColor = function(color) {
+        return (color === 'black') ? 'white' : 'black';
+    };
+
     ChessJS.squareColor = function(i, j) {
         if (i % 2) {
             return !(j % 2) ? "black" : "white";
