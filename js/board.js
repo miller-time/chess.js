@@ -33,7 +33,9 @@
                 drop: function(event, ui) {
                     var piece = ui.draggable.data('piece');
                     if (piece) {
+                        var oldSquare = piece.square;
                         piece.moveTo(self);
+                        oldSquare.piece = null;
                     }
                     // clear any remaining square highlights
                     $('.highlight').removeClass('highlight');

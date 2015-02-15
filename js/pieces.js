@@ -70,7 +70,12 @@
         this.element = $('<div />')
             .addClass(this.color)
             .addClass('rook piece')
-            .data('piece', this);
+            .data('piece', this)
+            .draggable({
+                revert: 'invalid',
+                helper: 'clone',
+                opacity: 0.7
+            });
     };
 
     ChessJS.Rook.prototype.possibleSquares = function() {
@@ -114,7 +119,12 @@
         this.element = $('<div />')
             .addClass(this.color)
             .addClass('knight piece')
-            .data('piece', this);
+            .data('piece', this)
+            .draggable({
+                revert: 'invalid',
+                helper: 'clone',
+                opacity: 0.7
+            });
     };
 
     ChessJS.Knight.prototype.possibleSquares = function() {
@@ -145,7 +155,12 @@
         this.element = $('<div />')
             .addClass(this.color)
             .addClass('bishop piece')
-            .data('piece', this);
+            .data('piece', this)
+            .draggable({
+                revert: 'invalid',
+                helper: 'clone',
+                opacity: 0.7
+            });
     };
 
     ChessJS.Bishop.prototype.possibleSquares = function() {
@@ -189,7 +204,12 @@
         this.element = $('<div />')
             .addClass(this.color)
             .addClass('queen piece')
-            .data('piece', this);
+            .data('piece', this)
+            .draggable({
+                revert: 'invalid',
+                helper: 'clone',
+                opacity: 0.7
+            });
     };
 
     ChessJS.Queen.prototype.possibleSquares = function() {
@@ -255,7 +275,12 @@
         this.element = $('<div />')
             .addClass(this.color)
             .addClass('king piece')
-            .data('piece', this);
+            .data('piece', this)
+            .draggable({
+                revert: 'invalid',
+                helper: 'clone',
+                opacity: 0.7
+            });
     };
 
     ChessJS.King.prototype.possibleSquares = function() {
