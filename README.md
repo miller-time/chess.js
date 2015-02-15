@@ -7,8 +7,7 @@ My first *big* programming project ever was a Chess game in C++ using the Borlan
 and a weird graphics library with a lot of boilerplate I didn't understand. My skills were as green as
 a meadow, and my code ended up disgusting. The game, nevertheless, was buggy and unmaintainable.
 
-For a long time I've wanted to try again. I'm going to use JQuery and regular objects to do it from
-scratch, just for fun.
+For a long time I've wanted to try again. This was done with only jQuery, just for fun.
 
 To Do
 =====
