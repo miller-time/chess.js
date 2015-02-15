@@ -81,6 +81,15 @@ body {
     font-size: 11px;
 }
 
+#footer a {
+    text-decoration: none;
+    color: #414141;
+}
+
+#footer a:hover {
+    text-shadow: 1px 1px 1px #999;
+}
+
 #footer img {
     vertical-align: bottom;
 }
