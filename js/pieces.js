@@ -2,6 +2,7 @@
 
     var Piece = function(color) {
         this.color = color;
+        this.status = 'new';
         this.setupElement();
     };
 
@@ -18,6 +19,7 @@
         this.square = square;
         if (oldSquare) {
             oldSquare.piece = null;
+            this.status = 'in play';
         }
         this.element.css({
             top: square.y * 50 + "px",
@@ -31,6 +33,7 @@
 
     Piece.prototype.capture = function() {
         this.element.hide();
+        this.status = 'captured';
         $(document).trigger('pieceCaptured', this);
     };
 
@@ -61,8 +64,16 @@
         var squares = [],
             yPlusOne = (this.color) == "white" ? -1 : 1;
         var canMoveOne = squares.pushSquare(ChessJS.getRelativeSquare(this.square, 0, yPlusOne), 'any');
-        if (canMoveOne) {
+        if (canMoveOne && this.status === 'new') {
             squares.pushSquare(ChessJS.getRelativeSquare(this.square, 0, yPlusOne*2), 'any');
+        }
+        var leftAttackSquare = ChessJS.getRelativeSquare(this.square, -1, yPlusOne),
+            rightAttackSquare = ChessJS.getRelativeSquare(this.square, 1, yPlusOne);
+        if (leftAttackSquare.piece && leftAttackSquare.piece.color !== this.color) {
+            squares.push(leftAttackSquare);
+        }
+        if (rightAttackSquare.piece && rightAttackSquare.piece.color !== this.color) {
+            squares.push(rightAttackSquare);
         }
         return squares;
     };
