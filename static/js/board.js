@@ -25,7 +25,10 @@
                     var piece = draggedElement.data('piece');
                     if (piece) {
                         var validSquares;
-                        if (ChessJS.game && ChessJS.game[piece.color + 'InCheck']) {
+                        if (ChessJS.game && ChessJS.game.whoseTurn !== piece.color) {
+                            // not your turn!
+                            validSquares = [];
+                        } else if (ChessJS.game && ChessJS.game[piece.color + 'InCheck']) {
                             // check if this piece can break check
                             validSquares = [];
                         } else {

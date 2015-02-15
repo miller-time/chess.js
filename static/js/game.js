@@ -50,11 +50,6 @@
         $('.white-player').find('h3').text(this.whitePlayer);
         $('.white-player').find('.go-icon').show();
         $('.panel').show();
-        $('.black.piece').each(function() {
-            if ($(this).data('piece') && $(this).data('piece').status !== 'captured') {
-                $(this).draggable('option', 'disabled', true);
-            }
-        });
     };
 
     ChessJS.ChessGame.prototype.turnTaken = function(color) {
@@ -62,16 +57,6 @@
         this.whoseTurn = blacksTurn ? 'black' : 'white';
         $('.black-player').find('.go-icon').toggle(blacksTurn);
         $('.white-player').find('.go-icon').toggle(!blacksTurn);
-        $('.black.piece').each(function() {
-            if ($(this).data('piece') && $(this).data('piece').status !== 'captured') {
-                $(this).draggable('option', 'disabled', !blacksTurn);
-            }
-        });
-        $('.white.piece').each(function() {
-            if ($(this).data('piece') && $(this).data('piece').status !== 'captured') {
-                $(this).draggable('option', 'disabled', blacksTurn);
-            }
-        });
     };
 
     ChessJS.ChessGame.prototype.checkForCheck = function(color) {
