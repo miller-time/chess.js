@@ -37,7 +37,12 @@
         this.element = $('<div />')
             .addClass(this.color)
             .addClass('pawn piece')
-            .data('piece', this);
+            .data('piece', this)
+            .draggable({
+                revert: 'invalid',
+                helper: 'clone',
+                opacity: 0.7
+            });
     };
 
     ChessJS.Pawn.prototype.possibleSquares = function() {

@@ -11,13 +11,34 @@
     };
 
     Square.prototype.setupElement = function() {
+        var self = this;
         this.element = $("<div />")
             .css({
                 top: this.y * 50 + "px",
                 left: this.x * 50 + "px"
             })
             .addClass("square")
-            .addClass(ChessJS.squareColor(this.x, this.y));
+            .addClass(ChessJS.squareColor(this.x, this.y))
+            .droppable({
+                activeClass: 'highlight',
+                accept: function(draggedElement) {
+                    var piece = draggedElement.data('piece');
+                    if (piece) {
+                        var validSquares = piece.possibleSquares();
+                        if (validSquares.indexOf(self) !== -1) {
+                            return true;
+                        }
+                    }
+                },
+                drop: function(event, ui) {
+                    var piece = ui.draggable.data('piece');
+                    if (piece) {
+                        piece.moveTo(self);
+                    }
+                    // clear any remaining square highlights
+                    $('.highlight').removeClass('highlight');
+                }
+            });
     };
 
     ChessJS.Board = function() {
