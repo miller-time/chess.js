@@ -6,6 +6,10 @@ body {
     margin: 0;
 }
 
+.clearfix {
+    clear: both;
+}
+
 .heading {
     background-color: black;
     height: 48px;
@@ -40,6 +44,32 @@ body {
     bottom: 0;
     left: 600px;
     background-color: #DDD;
+    display: none;
+}
+
+.black-player {
+    padding: 20px;
+    margin-top: 20px;
+    margin-bottom: 150px;
+}
+
+.white-player {
+    padding: 20px;
+}
+
+.black-player h3, .white-player h3 {
+    margin-top: 0;
+    width: calc(100% - 30px);
+    float: left;
+}
+
+.go-icon {
+    width: 30px;
+    height: 30px;
+    display: none;
+    background: url(img/go.png);
+    z-index: 20;
+    float: left;
 }
 
 .rounded {

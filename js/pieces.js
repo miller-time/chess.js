@@ -20,6 +20,7 @@
         if (oldSquare) {
             oldSquare.piece = null;
             this.status = 'in play';
+            $(document).trigger('pieceMoved', this);
         }
         this.element.css({
             top: square.y * 50 + "px",

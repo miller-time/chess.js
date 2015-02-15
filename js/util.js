@@ -3,8 +3,8 @@
     window.ChessJS = window.ChessJS || {};
 
     ChessJS.getRelativeSquare = function(square, deltaX, deltaY) {
-        if (this.board) {
-            return this.board.getSquarebyXY(square.x + deltaX, square.y + deltaY);
+        if (this.game && this.game.board) {
+            return this.game.board.getSquarebyXY(square.x + deltaX, square.y + deltaY);
         }
     };
 

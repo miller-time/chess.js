@@ -1,50 +1,83 @@
 (function() {
 
     ChessJS.ChessGame = function() {
-        this.playerOne = 'Player 1';
-        this.playerTwo = 'Player 2';
+        this.whitePlayer = 'White Player';
+        this.blackPlayer = 'Black Player';
+        this.whoseTurn = 'white';
         this.setupSplashScreen();
     };
 
     ChessJS.ChessGame.prototype.setupSplashScreen = function() {
         var self = this;
-        var playerOneInput = $('<input />')
-            .addClass('player-one')
-            .attr('placeholder', 'Player 1')
+        var whitePlayerInput = $('<input />')
+            .attr('placeholder', 'White Player')
             .change(function() {
-                self.playerOne = $(this).val();
+                self.whitePlayer = $(this).val();
             });
-        var playerTwoInput = $('<input />')
-            .addClass('player-two')
-            .attr('placeholder', 'Player 2')
+        var blackPlayerInput = $('<input />')
+            .attr('placeholder', 'Black Player')
             .change(function() {
-                self.playerTwo = $(this).val();
+                self.blackPlayer = $(this).val();
             });
         var submitButton = $('<button />')
             .addClass('start-game')
             .text('Start Game')
             .button()
             .click(function() {
-                // initialize board
-                // this.board = new ChessJS.Board();
-
-                // start game
+                self.element.remove();
+                self.startGame();
             });
 
         this.element = $('<div />')
             .addClass('splash rounded')
             .append($('<table />')
                 .append($('<tr />')
-                    .append($('<td />').text('Player 1 (White)'))
+                    .append($('<td />').text('Black Player'))
                     .append($('<td />')
-                        .append(playerOneInput)))
+                        .append(blackPlayerInput)))
                 .append($('<tr />')
-                    .append($('<td />').text('Player 2 (Black)'))
+                    .append($('<td />').text('White Player'))
                     .append($('<td />')
-                        .append(playerTwoInput))))
+                        .append(whitePlayerInput))))
             .append(submitButton);
         $('body').append(this.element);
 
     };
+
+    ChessJS.ChessGame.prototype.startGame = function() {
+        this.board = new ChessJS.Board();
+        $('.black-player').find('h3').text(this.blackPlayer);
+        $('.white-player').find('h3').text(this.whitePlayer);
+        $('.white-player').find('.go-icon').show();
+        $('.panel').show();
+        $('.black.piece').each(function() {
+            if ($(this).data('piece')) {
+                $(this).draggable('option', 'disabled', true);
+            }
+        });
+    };
+
+    ChessJS.ChessGame.prototype.turnTaken = function(color) {
+        var blacksTurn = (color === 'white');
+        this.whoseTurn = blacksTurn ? 'black' : 'white';
+        $('.black-player').find('.go-icon').toggle(blacksTurn);
+        $('.white-player').find('.go-icon').toggle(!blacksTurn);
+        $('.black.piece').each(function() {
+            if ($(this).data('piece')) {
+                $(this).draggable('option', 'disabled', !blacksTurn);
+            }
+        });
+        $('.white.piece').each(function() {
+            if ($(this).data('piece')) {
+                $(this).draggable('option', 'disabled', blacksTurn);
+            }
+        });
+    };
+
+    $(document).on('pieceMoved', function(event, piece) {
+        if (ChessJS.game) {
+            ChessJS.game.turnTaken(piece.color);
+        }
+    });
 
 })();
