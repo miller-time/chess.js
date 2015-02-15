@@ -21,15 +21,18 @@
      * `square`: Square
      *
      * Cannot be pushed if it's undefined or occupied by a piece of invalid color.
-     * Returns true if push was successful, false otherwise.
+     * Returns true if square was empty, false otherwise.
      */
     Array.prototype.pushSquare = function(square, invalidColor) {
         if (square && !square.piece) {
+            // no piece is on target square
             this.push(square);
             return true;
         } else if (square && square.piece && invalidColor !== 'any' && square.piece.color !== invalidColor) {
+            // piece on target square can be captured
             this.push(square);
-            return true;
+            // cannot move beyond this square, so return false
+            return false;
         }
         return false;
     };
