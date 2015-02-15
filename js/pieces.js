@@ -69,10 +69,10 @@
         }
         var leftAttackSquare = ChessJS.getRelativeSquare(this.square, -1, yPlusOne),
             rightAttackSquare = ChessJS.getRelativeSquare(this.square, 1, yPlusOne);
-        if (leftAttackSquare.piece && leftAttackSquare.piece.color !== this.color) {
+        if (leftAttackSquare && leftAttackSquare.piece && leftAttackSquare.piece.color !== this.color) {
             squares.push(leftAttackSquare);
         }
-        if (rightAttackSquare.piece && rightAttackSquare.piece.color !== this.color) {
+        if (rightAttackSquare && rightAttackSquare.piece && rightAttackSquare.piece.color !== this.color) {
             squares.push(rightAttackSquare);
         }
         return squares;
