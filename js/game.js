@@ -51,7 +51,7 @@
         $('.white-player').find('.go-icon').show();
         $('.panel').show();
         $('.black.piece').each(function() {
-            if ($(this).data('piece')) {
+            if ($(this).data('piece') && $(this).data('piece').status !== 'captured') {
                 $(this).draggable('option', 'disabled', true);
             }
         });
@@ -63,12 +63,12 @@
         $('.black-player').find('.go-icon').toggle(blacksTurn);
         $('.white-player').find('.go-icon').toggle(!blacksTurn);
         $('.black.piece').each(function() {
-            if ($(this).data('piece')) {
+            if ($(this).data('piece') && $(this).data('piece').status !== 'captured') {
                 $(this).draggable('option', 'disabled', !blacksTurn);
             }
         });
         $('.white.piece').each(function() {
-            if ($(this).data('piece')) {
+            if ($(this).data('piece') && $(this).data('piece').status !== 'captured') {
                 $(this).draggable('option', 'disabled', blacksTurn);
             }
         });
@@ -78,6 +78,20 @@
         if (ChessJS.game) {
             ChessJS.game.turnTaken(piece.color);
         }
+    });
+
+    $(document).on('pieceCaptured', function(event, piece) {
+        piece.element
+            .detach()
+            .css({
+                'top': '0px',
+                'left': '0px',
+                'display': 'block',
+                'position': 'relative',
+                'float': 'left'
+            })
+            .draggable('destroy');
+        $('.' + piece.color + '-player').append(piece.element);
     });
 
 })();
