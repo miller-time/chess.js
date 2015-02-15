@@ -14,12 +14,24 @@
     };
 
     Piece.prototype.moveTo = function(square) {
+        var oldSquare = this.square;
         this.square = square;
-        square.piece = this;
+        if (oldSquare) {
+            oldSquare.piece = null;
+        }
         this.element.css({
             top: square.y * 50 + "px",
             left: square.x * 50 + "px"
         });
+        if (square.piece) {
+            square.piece.capture();
+        }
+        square.piece = this;
+    };
+
+    Piece.prototype.capture = function() {
+        this.element.hide();
+        $(document).trigger('pieceCaptured', this);
     };
 
     /***************************************
