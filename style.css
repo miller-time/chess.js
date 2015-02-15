@@ -1,3 +1,7 @@
+* {
+    font-family: 'Montserrat', sans-serif;
+}
+
 body {
     margin: 0;
 }
@@ -13,12 +17,20 @@ body {
     color: white;
 }
 
-.board {
+.board, .splash {
     width: 400px;
     height: 400px;
     margin-left: 100px;
     margin-top: 50px;
     position: relative;
+}
+
+.splash table {
+    padding: 20px;
+}
+
+.splash button {
+    margin-left: 50px;
 }
 
 .panel {
