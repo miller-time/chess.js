@@ -63,6 +63,10 @@
             throw 'Unable to check moves because board not initialized.';
         }
 
+        if (piece.status === 'captured') {
+            return [];
+        }
+
         ChessJS.breakCheckStore = ChessJS.breakCheckStore || new ChessJS.BreakCheckStore();
 
         var state = ChessJS.game.board.getState(),
