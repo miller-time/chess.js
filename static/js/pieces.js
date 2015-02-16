@@ -62,6 +62,7 @@
     ChessJS.Piece.prototype.capture = function() {
         this.element.hide();
         this.status = 'captured';
+        this.square = null;
         $(document).trigger('pieceCaptured', this);
     };
 
