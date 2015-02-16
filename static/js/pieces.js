@@ -1,26 +1,40 @@
 (function() {
 
-    var Piece = function(color, name) {
+    ChessJS.Piece = function(color, name) {
         this.color = color;
         this.name = name;
         this.status = 'new';
         this.setupElement();
     };
 
-    Piece.prototype.setupElement = function() {
+    ChessJS.Piece.prototype.toString = function() {
+        return JSON.stringify({color: this.color, name: this.name, status: this.status});
+    };
+
+    ChessJS.Piece.prototype.checkSum = function() {
+        return CryptoJS.MD5(this.toString()).toString(CryptoJS.enc.Hex);
+    };
+
+    ChessJS.Piece.prototype.setupElement = function() {
         this.element = null;
     };
 
-    Piece.prototype.possibleSquares = function() {
+    ChessJS.Piece.prototype.possibleSquares = function() {
         return [];
     };
 
-    Piece.prototype.canMoveTo = function(square) {
-        var squares = this.possibleSquares();
-        return squares.indexOf(square) !== -1;
+    ChessJS.Piece.prototype.canMoveTo = function(square, boardState) {
+        var squares = this.possibleSquares(boardState),
+            canMoveHere = false;
+        $.each(squares, function(idx, squareToCheck) {
+            if (square.x === squareToCheck.x && square.y === squareToCheck.y) {
+                canMoveHere = true;
+            }
+        });
+        return canMoveHere;
     };
 
-    Piece.prototype.moveTo = function(square) {
+    ChessJS.Piece.prototype.moveTo = function(square) {
         var oldSquare = this.square;
         this.square = square;
         if (oldSquare) {
@@ -38,7 +52,7 @@
         square.piece = this;
     };
 
-    Piece.prototype.capture = function() {
+    ChessJS.Piece.prototype.capture = function() {
         this.element.hide();
         this.status = 'captured';
         $(document).trigger('pieceCaptured', this);
@@ -49,10 +63,10 @@
      ***************************************/
 
     ChessJS.Pawn = function(color) {
-        Piece.call(this, color, 'pawn');
+        ChessJS.Piece.call(this, color, 'pawn');
     };
 
-    ChessJS.Pawn.prototype = Object.create(Piece.prototype);
+    ChessJS.Pawn.prototype = Object.create(ChessJS.Piece.prototype);
     ChessJS.Pawn.prototype.constructor = ChessJS.Pawn;
 
     ChessJS.Pawn.prototype.setupElement = function() {
@@ -90,10 +104,10 @@
      ***************************************/
 
     ChessJS.Rook = function(color) {
-        Piece.call(this, color, 'rook');
+        ChessJS.Piece.call(this, color, 'rook');
     };
 
-    ChessJS.Rook.prototype = Object.create(Piece.prototype);
+    ChessJS.Rook.prototype = Object.create(ChessJS.Piece.prototype);
     ChessJS.Rook.prototype.constructor = ChessJS.Rook;
 
     ChessJS.Rook.prototype.setupElement = function() {
@@ -139,10 +153,10 @@
      ***************************************/
 
     ChessJS.Knight = function(color) {
-        Piece.call(this, color, 'knight');
+        ChessJS.Piece.call(this, color, 'knight');
     };
 
-    ChessJS.Knight.prototype = Object.create(Piece.prototype);
+    ChessJS.Knight.prototype = Object.create(ChessJS.Piece.prototype);
     ChessJS.Knight.prototype.constructor = ChessJS.Knight;
 
     ChessJS.Knight.prototype.setupElement = function() {
@@ -175,10 +189,10 @@
     ***************************************/
 
     ChessJS.Bishop = function(color) {
-        Piece.call(this, color, 'bishop');
+        ChessJS.Piece.call(this, color, 'bishop');
     };
 
-    ChessJS.Bishop.prototype = Object.create(Piece.prototype);
+    ChessJS.Bishop.prototype = Object.create(ChessJS.Piece.prototype);
     ChessJS.Bishop.prototype.constructor = ChessJS.Bishop;
 
     ChessJS.Bishop.prototype.setupElement = function() {
@@ -244,10 +258,10 @@
     ***************************************/
 
     ChessJS.Queen = function(color) {
-        Piece.call(this, color, 'queen');
+        ChessJS.Piece.call(this, color, 'queen');
     };
 
-    ChessJS.Queen.prototype = Object.create(Piece.prototype);
+    ChessJS.Queen.prototype = Object.create(ChessJS.Piece.prototype);
     ChessJS.Queen.prototype.constructor = ChessJS.Queen;
 
     ChessJS.Queen.prototype.setupElement = function() {
@@ -335,10 +349,10 @@
     ***************************************/
 
     ChessJS.King = function(color) {
-        Piece.call(this, color, 'king');
+        ChessJS.Piece.call(this, color, 'king');
     };
 
-    ChessJS.King.prototype = Object.create(Piece.prototype);
+    ChessJS.King.prototype = Object.create(ChessJS.Piece.prototype);
     ChessJS.King.prototype.constructor = ChessJS.King;
 
     ChessJS.King.prototype.setupElement = function() {

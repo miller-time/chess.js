@@ -29,8 +29,8 @@
                             // not your turn!
                             validSquares = [];
                         } else if (ChessJS.game && ChessJS.game[piece.color + 'InCheck']) {
-                            // check if this piece can break check
-                            validSquares = [];
+                            // break check moves
+                            validSquares = ChessJS.possibleBreakCheckMoves(piece);
                         } else {
                             // normal movement rules
                             validSquares = piece.possibleSquares();
@@ -176,25 +176,45 @@
 
     ChessJS.BoardState = function(board) {
         this.squares = [];
+        this.pieces = [];
+        var self = this;
         $.each(board.squares, function(idx, square) {
             var squareInfo = {
                 x: square.x,
                 y: square.y
             };
             if (square.piece) {
-                squareInfo.piece = {
+                var pieceInfo = {
                     'color': square.piece.color,
-                    'name': square.piece.name
-                }
+                    'name': square.piece.name,
+                    'status': square.piece.status
+                };
+                squareInfo.piece = pieceInfo;
+                pieceInfo.square = squareInfo;
+                self.pieces.push(pieceInfo);
             }
-            squares.push(squareInfo);
+            self.squares.push(squareInfo);
         });
+    };
+
+    ChessJS.BoardState.prototype.toString = function() {
+        var squares = this.squares.slice();
+        $.each(squares, function(idx, square) {
+            if (square.piece) {
+                delete square.piece.square;
+            }
+        });
+        return JSON.stringify({'squares': squares});
+    };
+
+    ChessJS.BoardState.prototype.checkSum = function() {
+        return CryptoJS.MD5(this.toString()).toString(CryptoJS.enc.Hex);
     };
 
     ChessJS.BoardState.prototype.getSquare = function(x, y) {
         for (var i = 0; i < this.squares.length; i++) {
-            if (squares[i].x === x && squares[i].y === y) {
-                return squares[i];
+            if (this.squares[i].x === x && this.squares[i].y === y) {
+                return this.squares[i];
             }
         }
     };
@@ -218,6 +238,29 @@
         } else {
             throw 'Cannot move piece from (' + x + ',' + y + '). It is not there!';
         }
+    };
+
+    ChessJS.BoardState.prototype.getKing = function(color) {
+        for (var i = 0; i < this.pieces.length; i++) {
+            if (this.pieces[i].name === 'king' && this.pieces[i].color === color) {
+                return this.pieces[i];
+            }
+        }
+    };
+
+    ChessJS.BoardState.prototype.checkForCheck = function(color) {
+        var self = this,
+            king = this.getKing(color),
+            kingInCheck = false;
+        $.each(this.pieces, function(idx, pieceInfo) {
+            if (king && pieceInfo.color === ChessJS.otherColor(color)) {
+                var tempPiece = ChessJS.makeTempPiece(pieceInfo);
+                if (tempPiece.canMoveTo(king.square, self)) {
+                    kingInCheck = true;
+                }
+            }
+        });
+        return kingInCheck;
     };
 
     ChessJS.Board.prototype.getState = function() {

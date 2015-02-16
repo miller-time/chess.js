@@ -59,7 +59,7 @@
         $('.white-player').find('.go-icon').toggle(!blacksTurn);
     };
 
-    ChessJS.ChessGame.prototype.checkForCheck = function(color) {
+    ChessJS.ChessGame.prototype.checkForCheck = function(color, boardState) {
         var king = $('.' + color + '.king').data('piece'),
             kingInCheck = false,
             threats = [];
