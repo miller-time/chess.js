@@ -8,7 +8,12 @@
     };
 
     ChessJS.Piece.prototype.toString = function() {
-        return JSON.stringify({color: this.color, name: this.name, status: this.status});
+        var obj = {color: this.color, name: this.name, status: this.status};
+        if (this.square) {
+            obj.x = this.square.x;
+            obj.y = this.square.y;
+        }
+        return JSON.stringify(obj);
     };
 
     ChessJS.Piece.prototype.checkSum = function() {
