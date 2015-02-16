@@ -41,12 +41,17 @@
                     }
                 },
                 drop: function(event, ui) {
-                    var piece = ui.draggable.data('piece');
+                    var piece = ui.draggable.data('piece'),
+                        breakingCheck = ChessJS.game.checkForCheck(piece.color);
                     if (piece) {
                         piece.moveTo(self);
                     }
                     // clear any remaining square highlights
                     $('.highlight').removeClass('highlight');
+                    if (breakingCheck) {
+                        $('.alert').removeClass('alert');
+                        $('.warning').removeClass('warning');
+                    }
                 }
             });
     };
