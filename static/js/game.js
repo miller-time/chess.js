@@ -65,7 +65,7 @@
             threats = [];
         if (king) {
             $.each(ChessJS.game.board.pieces, function(idx, piece) {
-                if (piece.color === ChessJS.otherColor(color) && piece.canMoveTo(king.square)) {
+                if (piece.color === ChessJS.otherColor(color) && piece.status !== 'captured' && piece.canMoveTo(king.square)) {
                     threats.push(piece);
                     kingInCheck = true;
                 }
