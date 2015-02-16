@@ -93,7 +93,7 @@
         var anyPieceCanBreakCheck = false;
         for (var i = 0; i < this.board.pieces.length; i++) {
             var pieceToCheck = this.board.pieces[i];
-            if (pieceToCheck.color === color) {
+            if (pieceToCheck.color === color && pieceToCheck.status !== 'captured') {
                 var moves = ChessJS.possibleBreakCheckMoves(pieceToCheck);
                 if (moves.length) {
                     anyPieceCanBreakCheck = true;
