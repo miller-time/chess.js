@@ -14,6 +14,5 @@ For a long time I've wanted to try again. This was done with only jQuery, just f
 To Do
 =====
 
- * Checkmate / Restarting the game
  * Castling
  * Queening

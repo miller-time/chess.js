@@ -89,14 +89,55 @@
         checkData.king.square.element.addClass('warning');
     };
 
+    ChessJS.ChessGame.prototype.checkForCheckMate = function(color) {
+        var anyPieceCanBreakCheck = false;
+        for (var i = 0; i < this.board.pieces.length; i++) {
+            var pieceToCheck = this.board.pieces[i];
+            if (pieceToCheck.color === color) {
+                var moves = ChessJS.possibleBreakCheckMoves(pieceToCheck);
+                if (moves.length) {
+                    anyPieceCanBreakCheck = true;
+                    break;
+                }
+            }
+        }
+        if (!anyPieceCanBreakCheck) {
+            var winner = this[ChessJS.otherColor(color) + 'Player'],
+                loser = this[color + 'Player'];
+            $('<div />').text(winner + ' has defeated ' + loser + '!')
+                .dialog({
+                    'title': 'Checkmate!',
+                    'buttons': [
+                        {
+                            autoOpen: true,
+                            draggable: true,
+                            modal: true,
+                            text: 'Start New Game',
+                            click: function() {
+                                $(document).trigger('startNewGame');
+                                $(this).dialog('close');
+                            }
+                        }
+                    ]
+                });
+        }
+    };
+
     $(document).on('pieceMoved', function(event, piece) {
         if (ChessJS.game) {
             checkData = ChessJS.game.checkForCheck(ChessJS.otherColor(piece.color));
             if (checkData && checkData.inCheck) {
                 ChessJS.game[checkData.inCheck + 'InCheck'] = true;
                 ChessJS.game.highlightCheck(checkData);
+                $(document).trigger('placedInCheck', ChessJS.otherColor(piece.color));
             }
             ChessJS.game.turnTaken(piece.color);
+        }
+    });
+
+    $(document).on('placedInCheck', function(event, color) {
+        if (ChessJS.game) {
+            ChessJS.game.checkForCheckMate(color);
         }
     });
 

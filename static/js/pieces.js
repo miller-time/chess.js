@@ -45,7 +45,6 @@
         if (oldSquare) {
             oldSquare.piece = null;
             this.status = 'in play';
-            $(document).trigger('pieceMoved', this);
         }
         this.element.css({
             top: square.y * 50 + "px",
@@ -55,6 +54,9 @@
             square.piece.capture();
         }
         square.piece = this;
+        if (oldSquare) {
+            $(document).trigger('pieceMoved', this);
+        }
     };
 
     ChessJS.Piece.prototype.capture = function() {
