@@ -236,8 +236,7 @@
             };
             newSquare.piece = piece;
             piece.square = newSquare;
-            var oldKing = this.getKing(piece.color);
-            this.pieces.splice(this.pieces.indexOf(oldKing), 1);
+            this.pieces.splice(this.pieces.indexOf(oldSquare.piece), 1);
             this.pieces.push(piece);
             oldSquare.piece = null;
         } else {
