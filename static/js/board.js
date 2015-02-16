@@ -266,7 +266,7 @@
             king = this.getKing(color),
             kingInCheck = false;
         $.each(this.pieces, function(idx, pieceInfo) {
-            if (king && pieceInfo.color === ChessJS.otherColor(color)) {
+            if (king && pieceInfo.color === ChessJS.otherColor(color) && pieceInfo.status !== 'captured') {
                 var tempPiece = ChessJS.makeTempPiece(pieceInfo);
                 if (tempPiece.canMoveTo(king.square, self)) {
                     kingInCheck = true;
