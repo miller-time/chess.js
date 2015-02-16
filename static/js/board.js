@@ -234,6 +234,10 @@
                 'name': oldSquare.piece.name,
                 'status': oldSquare.piece.status
             };
+            if (newSquare.piece) {
+                // capture
+                this.pieces.splice(this.pieces.indexOf(newSquare.piece), 1);
+            }
             newSquare.piece = piece;
             piece.square = newSquare;
             this.pieces.splice(this.pieces.indexOf(oldSquare.piece), 1);
