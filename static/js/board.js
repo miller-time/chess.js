@@ -229,11 +229,16 @@
             throw 'Cannot move piece to (' + newX + ',' + newY + '). Square does not exist!';
         }
         if (oldSquare.piece) {
-            newSquare.piece = {
+            var piece = {
                 'color': oldSquare.piece.color,
                 'name': oldSquare.piece.name,
                 'status': oldSquare.piece.status
             };
+            newSquare.piece = piece;
+            piece.square = newSquare;
+            var oldKing = this.getKing(piece.color);
+            this.pieces.splice(this.pieces.indexOf(oldKing), 1);
+            this.pieces.push(piece);
             oldSquare.piece = null;
         } else {
             throw 'Cannot move piece from (' + x + ',' + y + '). It is not there!';
